@@ -158,7 +158,12 @@ class Cluster:
               <PreferredBackupWindow>{{ cluster.preferred_backup_window }}</PreferredBackupWindow>
               <PreferredMaintenanceWindow>{{ cluster.preferred_maintenance_window }}</PreferredMaintenanceWindow>
               <ReadReplicaIdentifiers></ReadReplicaIdentifiers>
-              <DBClusterMembers></DBClusterMembers>
+              <DBClusterMembers>
+                  <DBInstanceIdentifier>{{ cluster.writer_instance.db_instance_identifier }}</DBInstanceIdentifier>
+                  <IsClusterWriter>True</IsClusterWriter>
+                  <DBClusterParameterGroupStatus>in-sync</DBClusterParameterGroupStatus>
+                  <PromotionTier>1</PromotionTier>
+              </DBClusterMembers>
               <VpcSecurityGroups>
               {% for id in cluster.vpc_security_groups %}
                   <VpcSecurityGroup>
