@@ -113,6 +113,10 @@ class Cluster:
         self.enabled_cloudwatch_logs_exports = (
             kwargs.get("enable_cloudwatch_logs_exports") or []
         )
+        # TODO: add a check for DB Instance Identifier, add it to _get_db_cluster kwargs
+        kwargs["db_instance_identifier"] = f"{self.db_cluster_identifier}-instance-writer" # TODO: check this thing
+        kwargs["availability_zone"] = self.availability_zones[0]
+        self.writer_instance = rds_backends[self.region_name].create_db_instance(kwargs)
 
     @property
     def db_cluster_arn(self):
